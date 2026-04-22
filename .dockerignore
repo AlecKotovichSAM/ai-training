@@ -1,0 +1,8 @@
+target
+.git
+.idea
+.vscode
+*.log
+README.md
+HELP.md
+AGENTS.md

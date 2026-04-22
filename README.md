@@ -37,19 +37,28 @@ An internal **append-only** audit service for recording and storing company even
 ### Running the Application
 
 ```bash
-# Create PostgreSQL container
-docker run -d --name auditdb \
-  -e POSTGRES_DB=auditdb \
-  -e POSTGRES_USER=audit \
-  -e POSTGRES_PASSWORD=audit \
-  -p 5432:5432 \
-  postgres:16-alpine
+# Start PostgreSQL + application from compose.yaml
+docker compose up -d
 
-# Start the application (Flyway migrations applied automatically)
-./mvnw spring-boot:run
+# Check service health
+docker compose ps
 ```
 
 Application will be available at `http://localhost:8080`
+
+To stop the database:
+
+```bash
+docker compose down
+```
+
+### Local Dev Cycle (quick)
+
+```bash
+docker compose up -d
+./mvnw test
+docker compose down
+```
 
 ### Running Tests
 
