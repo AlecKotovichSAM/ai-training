@@ -143,4 +143,15 @@ com.alec.aitraining/
 - ✅ Database migrations (Flyway V1, V2)
 - ✅ Retention service (event archival)
 - ✅ Unit & integration tests
-- ⚠️ AuditEventIntegrationTest has issues with nested tests in Maven Surefire (technical issue)
+
+## 📅 Change History
+
+### 2026-04-22
+- Added `compose.yaml` for local PostgreSQL and application startup via Docker Compose.
+- Added `Dockerfile` and `.dockerignore` for containerized application build/run.
+- Added Swagger/OpenAPI support (`springdoc`) with UI at `/swagger-ui.html`.
+- Updated `GET /audit-events` OpenAPI docs with correct `sort` example (`timestamp,desc`).
+- Added integration tests for time-range filtering and DB append-only trigger behavior.
+- Migrated tests to non-deprecated Testcontainers PostgreSQL class.
+- Added Spring Boot DevTools for IDE auto-restart during local development.
+- Updated project documentation (`README.md`, `AGENTS.md`) to reflect current setup.
