@@ -2,7 +2,7 @@
 
 > Справочник для AI-агентов и разработчиков, работающих с этим репозиторием.
 > 
-> **Последнее обновление:** 22.04.2026 — добавлен troubleshooting раздел для Flyway
+> **Последнее обновление:** 22.04.2026 — добавлены Docker Compose, Dockerfile, Swagger/OpenAPI и DevTools
 
 ---
 
@@ -25,6 +25,8 @@
 | Migrations | Flyway (`db/migration/V*.sql`) |
 | Build | Maven (wrapper: `mvnw.cmd` / `mvnw`) |
 | Tests | JUnit 5, Testcontainers (`postgres:16-alpine`), MockMvc |
+| API Docs | springdoc OpenAPI + Swagger UI |
+| Local infra | Docker Compose (`compose.yaml`) + Dockerfile приложения |
 | Utilities | Lombok (`@Slf4j`, `@Builder`, `@Getter`, `@RequiredArgsConstructor`) |
 
 ---
@@ -93,6 +95,13 @@ com.alec.aitraining
 | `from` | ISO-8601 instant | Нижняя граница timestamp |
 | `to` | ISO-8601 instant | Верхняя граница timestamp |
 
+`sort` должен быть в формате Spring Data: `property,(asc|desc)`, например
+`sort=timestamp,desc` (а не JSON-массив).
+
+### OpenAPI / Swagger
+- `GET /v3/api-docs` — OpenAPI JSON
+- `GET /swagger-ui.html` — Swagger UI
+
 ---
 
 ## Retention Policy
@@ -137,16 +146,28 @@ com.alec.aitraining
 # Запуск всех тестов (требует Docker для Testcontainers)
 ./mvnw test
 
-# Запуск приложения (требует локальный Postgres)
+# Локальный запуск приложения (требует локальный Postgres)
 ./mvnw spring-boot:run
 ```
 
-Перед запуском приложения нужен Postgres:
+Для локальной БД используется Docker Compose:
 ```bash
-docker run -d --name auditdb -e POSTGRES_DB=auditdb \
-  -e POSTGRES_USER=audit -e POSTGRES_PASSWORD=audit \
-  -p 5432:5432 postgres:16-alpine
+docker compose up -d
+docker compose ps
 ```
+
+Запуск приложения в контейнерах (БД + app):
+```bash
+docker compose up -d
+```
+
+Остановка:
+```bash
+docker compose down
+```
+
+Для разработки в IDE подключён `spring-boot-devtools` (auto-restart при сохранении,
+если включён Build Automatically).
 
 **Важно:** Проект использует Spring Boot 4.0.5 и Java 25.
 
