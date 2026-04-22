@@ -4,6 +4,9 @@ import com.alec.aitraining.dto.AuditEventResponse;
 import com.alec.aitraining.dto.AuditEventSearchRequest;
 import com.alec.aitraining.dto.CreateAuditEventRequest;
 import com.alec.aitraining.service.AuditEventService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,8 +50,19 @@ public class AuditEventController {
      * </pre>
      */
     @GetMapping
+    @Parameters({
+            @Parameter(name = "page", in = ParameterIn.QUERY, description = "Page number (0-based)", example = "0"),
+            @Parameter(name = "size", in = ParameterIn.QUERY, description = "Page size", example = "50"),
+            @Parameter(
+                    name = "sort",
+                    in = ParameterIn.QUERY,
+                    description = "Sorting criteria in format: property,(asc|desc). Repeat parameter for multiple sort fields.",
+                    example = "timestamp,desc"
+            )
+    })
     public Page<AuditEventResponse> search(
             AuditEventSearchRequest searchRequest,
+            @Parameter(hidden = true)
             @PageableDefault(size = 50, sort = "timestamp") Pageable pageable
     ) {
         return service.search(searchRequest, pageable);

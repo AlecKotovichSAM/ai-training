@@ -52,6 +52,11 @@ To stop the database:
 docker compose down
 ```
 
+### API Docs (Swagger/OpenAPI)
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
+
 ### Local Dev Cycle (quick)
 
 ```bash
