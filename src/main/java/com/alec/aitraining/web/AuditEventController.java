@@ -3,6 +3,7 @@ package com.alec.aitraining.web;
 import com.alec.aitraining.dto.AuditEventResponse;
 import com.alec.aitraining.dto.AuditEventSearchRequest;
 import com.alec.aitraining.dto.CreateAuditEventRequest;
+import com.alec.aitraining.dto.PageResponse;
 import com.alec.aitraining.service.AuditEventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,7 +51,7 @@ public class AuditEventController {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Paginated list of matching audit events",
-                    content = @Content(schema = @Schema(implementation = Page.class))),
+                    content = @Content(schema = @Schema(implementation = PageResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid query parameters", content = @Content)
     })
     @GetMapping
@@ -64,11 +65,11 @@ public class AuditEventController {
                     example = "timestamp,desc"
             )
     })
-    public Page<AuditEventResponse> search(
+    public PageResponse<AuditEventResponse> search(
             AuditEventSearchRequest searchRequest,
             @Parameter(hidden = true)
             @PageableDefault(size = 50, sort = "timestamp") Pageable pageable
     ) {
-        return service.search(searchRequest, pageable);
+        return PageResponse.from(service.search(searchRequest, pageable));
     }
 }
