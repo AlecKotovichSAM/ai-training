@@ -47,8 +47,8 @@ com.alec.aitraining
 ## Жёсткие инварианты — НИКОГДА не нарушать
 
 1. **append-only** — нет `UPDATE`, нет `DELETE` через JPA/приложение.
-   - Postgres-триггеры `BEFORE UPDATE` и `BEFORE DELETE` на таблице `audit_events`
-     выбрасывают исключение на уровне БД для полной защиты.
+   - Postgres-триггеры `BEFORE UPDATE` и `BEFORE DELETE` на **обеих** таблицах:
+     `audit_events` (V1) и `archived_audit_events` (V3).
    - Все поля сущности `AuditEvent` помечены `updatable = false`.
    - **Retention архивация НЕ должна удалять данные** - это нарушает audit trail.
 
@@ -123,6 +123,7 @@ com.alec.aitraining
 |---|---|---|
 | V1 | `V1__create_audit_events.sql` | Горячая таблица + DB-триггеры иммутабельности |
 | V2 | `V2__create_archived_audit_events.sql` | Архивная таблица |
+| V3 | `V3__protect_archived_audit_events.sql` | DB-триггеры иммутабельности на архивной таблице |
 
 **Правило:** новые изменения схемы — только через новый `V{n}__*.sql`.
 Никогда не редактировать существующие миграции.
