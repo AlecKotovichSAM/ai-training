@@ -4,9 +4,15 @@ import com.alec.aitraining.dto.AuditEventResponse;
 import com.alec.aitraining.dto.AuditEventSearchRequest;
 import com.alec.aitraining.dto.CreateAuditEventRequest;
 import com.alec.aitraining.service.AuditEventService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,6 +21,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Audit Events", description = "API for recording and querying audit events")
 @RestController
 @RequestMapping("/audit-events")
 @RequiredArgsConstructor
@@ -22,33 +29,30 @@ public class AuditEventController {
 
     private final AuditEventService service;
 
-    /**
-     * Accepts a single audit event from another service.
-     *
-     * <pre>
-     * POST /audit-events
-     * {
-     *   "actor":    "user:42",
-     *   "action":   "invoice.updated",
-     *   "resource": "invoice:777",
-     *   "outcome":  "SUCCESS",
-     *   "context":  { "ip": "10.0.0.1" }
-     * }
-     * </pre>
-     */
+    @Operation(
+            summary = "Create an audit event",
+            description = "Accepts a single audit event from another service and appends it to the immutable audit log."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Event successfully created",
+                    content = @Content(schema = @Schema(implementation = AuditEventResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request payload", content = @Content)
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AuditEventResponse create(@Valid @RequestBody CreateAuditEventRequest request) {
         return service.append(request);
     }
 
-    /**
-     * Searches events with optional filters.
-     *
-     * <pre>
-     * GET /audit-events?actor=user:42&from=2025-01-01T00:00:00Z&page=0&size=50
-     * </pre>
-     */
+    @Operation(
+            summary = "Search audit events",
+            description = "Returns a paginated list of audit events filtered by the provided criteria. All filter parameters are optional."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Paginated list of matching audit events",
+                    content = @Content(schema = @Schema(implementation = Page.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid query parameters", content = @Content)
+    })
     @GetMapping
     @Parameters({
             @Parameter(name = "page", in = ParameterIn.QUERY, description = "Page number (0-based)", example = "0"),
