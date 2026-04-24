@@ -146,6 +146,13 @@ com.alec.aitraining/
 
 ## 📅 Change History
 
+### 2026-04-24
+- Introduced `PageResponse` and switched `GET /audit-events` to a stable paginated response DTO.
+- Improved OpenAPI annotations for DTOs and endpoints to make Swagger contracts clearer.
+- Fixed retention idempotency by excluding already archived events and covering it with tests.
+- Added Flyway `V3__protect_archived_audit_events.sql` to enforce archive-table immutability via DB triggers.
+- Clarified AGENTS guidance about trigger protection on both `audit_events` and `archived_audit_events`.
+
 ### 2026-04-22
 - Added `compose.yaml` for local PostgreSQL and application startup via Docker Compose.
 - Added `Dockerfile` and `.dockerignore` for containerized application build/run.
