@@ -7,10 +7,11 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
+      # ───── setup (not counted as a pipeline step) ─────
       - uses: actions/checkout@v4
 
       - name: Make mvnw executable
@@ -23,8 +24,26 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Spotless check
-        run: ./mvnw spotless:check
+      # ─────────────────────────────────────────────
+      # ✅ STEP 1 — Build
+      # ─────────────────────────────────────────────
+      - name: Build (compile)
+        run: ./mvnw -B compile
 
-      - name: Build and test
-        run: ./mvnw test
+      # ─────────────────────────────────────────────
+      # ✅ STEP 2 — Spotless
+      # ─────────────────────────────────────────────
+      - name: Spotless check
+        run: ./mvnw -B spotless:check
+
+      # ─────────────────────────────────────────────
+      # ✅ STEP 3 — Tests (excluding ArchUnit)
+      # ─────────────────────────────────────────────
+      - name: Run tests (excluding ArchUnit)
+        run: ./mvnw -B test -DexcludedGroups=arch
+
+      # ─────────────────────────────────────────────
+      # ✅ STEP 4 — ArchUnit
+      # ─────────────────────────────────────────────
+      - name: Run ArchUnit tests
+        run: ./mvnw -B test -Dgroups=arch -DfailIfNoTests=true
