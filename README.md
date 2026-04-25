@@ -1,6 +1,6 @@
 # Audit Service (ai-training)
 
-**Secure, immutable audit service for enterprise applications**
+**Secure immutable audit service for enterprise applications**
 
 ## 📋 About
 
@@ -10,8 +10,8 @@ An internal **append-only** audit service for recording and storing company even
 - ✅ **Append-only** — no UPDATE/DELETE via API
 - 🔒 **Immutable** — protected by database triggers and JPA configuration
 - 🔗 **Hash chain** — SHA-256 for tamper-evidence
-- 📦 **Retention** — automatic archival of old events
-- 🔍 **Full-text search** — filtering by actor, resource, action, outcome, timestamp
+- 📦 **Retention policy** — automatic archival of old events (copying, not deletion)
+- 🔍 **Event search with filters** — by actor, resource, action, outcome, and timestamp range
 
 ## 🛠️ Technology Stack
 
@@ -37,16 +37,16 @@ An internal **append-only** audit service for recording and storing company even
 ### Running the Application
 
 ```bash
-# Start PostgreSQL + application from compose.yaml
+# Start PostgreSQL and application from compose.yaml
 docker compose up -d
 
-# Check service health
+# Check service status
 docker compose ps
 ```
 
 Application will be available at `http://localhost:8080`
 
-To stop the database:
+To stop all services:
 
 ```bash
 docker compose down
@@ -71,8 +71,11 @@ docker compose down
 # All tests (requires Docker for Testcontainers)
 ./mvnw test
 
-# Specific test
+# Specific integration test
 ./mvnw test -Dtest=RetentionServiceIntegrationTest
+
+# Architecture rules only (ArchUnit)
+./mvnw test -Dtest='*ArchUnitTest' -DfailIfNoTests=true
 ```
 
 ## 📊 REST API
@@ -126,11 +129,11 @@ com.alec.aitraining/
 
 ## 🔐 Security and Compliance
 
-- **Append-only design** — only way to add data
-- **Database triggers** — prevent UPDATE and DELETE at database level
-- **Hash chain** — SHA-256 for tamper detection
-- **Retention policy** — archival of old events for optimization (copying, not deletion)
-- **No delete endpoints** — API does not provide DELETE methods
+- **Append-only design** — data is written only through event append operations
+- **Database triggers** — UPDATE and DELETE are blocked at the database level
+- **Hash chain** — SHA-256 links events for tamper evidence
+- **Retention policy** — old events are archived by copying, never deleting
+- **Delete endpoint policy** — DELETE endpoints are intentionally not provided
 
 ## 📝 Documentation
 
@@ -139,17 +142,18 @@ com.alec.aitraining/
 
 ## ✅ Project Status
 
-- ✅ Core functionality (append, search, hash chain)
-- ✅ Database migrations (Flyway V1, V2)
-- ✅ Retention service (event archival)
-- ✅ Unit & integration tests
+- ✅ Core functionality — append, search, and hash-chain integrity are implemented
+- ✅ Database migrations — Flyway migrations V1, V2, and V3 are in place
+- ✅ Retention service — archival flow copies old events to archive storage
+- ✅ Test coverage — unit, integration, and ArchUnit test suites are included
+- ✅ CI pipeline — build, Spotless check, non-ArchUnit tests, and ArchUnit tests run in CI
 
 ## 📅 Change History
 
 ### 2026-04-25
 - Added Spotless formatting setup in `pom.xml` with custom Eclipse formatter config `config/eclipse-java-format.xml`.
 - Updated `AGENTS.md` formatting guidance to require using the Spotless/Eclipse formatter settings from `pom.xml`.
-- Added ArchUnit architecture tests in `src/test/archunit/com/alec/aitraining` to validate package-level constraints.
+- Added ArchUnit tests in `src/test/archunit/com/alec/aitraining` to validate package-level constraints.
 - Refined CI in `.github/workflows/ci.yml` to a clear 4-step pipeline: build, `spotless:check`, regular tests (excluding ArchUnit), then dedicated ArchUnit run.
 
 ### 2026-04-24
