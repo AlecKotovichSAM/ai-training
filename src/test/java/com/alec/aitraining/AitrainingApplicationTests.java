@@ -8,11 +8,10 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 @SpringBootTest
 class AitrainingApplicationTests {
 
-    @ServiceConnection
-    static PostgreSQLContainer postgres =
-            new PostgreSQLContainer("postgres:16-alpine");
+	@ServiceConnection
+	static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:16-alpine");
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 }

@@ -11,5 +11,4 @@ public class AitrainingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AitrainingApplication.class, args);
 	}
-
 }
