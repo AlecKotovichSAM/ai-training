@@ -2,8 +2,6 @@
 
 > Справочник для AI-агентов и разработчиков, работающих с этим репозиторием.
 > 
-> **Последнее обновление:** 22.04.2026 — добавлены Docker Compose, Dockerfile, Swagger/OpenAPI и DevTools
-
 ---
 
 ## Назначение сервиса
@@ -140,6 +138,10 @@ com.alec.aitraining
 
 ## Запуск и разработка
 
+Доступны 2 альтернативных сценария запуска:
+- **IDE/Maven** — локальный запуск приложения при доступном PostgreSQL на хосте.
+- **Docker Compose** — запуск PostgreSQL и приложения в контейнерах.
+
 ```bash
 # Сборка и компиляция
 ./mvnw clean compile
@@ -147,17 +149,11 @@ com.alec.aitraining
 # Запуск всех тестов (требует Docker для Testcontainers)
 ./mvnw test
 
-# Локальный запуск приложения (требует локальный Postgres)
+# Сценарий 1: локальный запуск приложения (IDE/Maven, требует доступный PostgreSQL)
 ./mvnw spring-boot:run
 ```
 
-Для локальной БД используется Docker Compose:
-```bash
-docker compose up -d
-docker compose ps
-```
-
-Запуск приложения в контейнерах (БД + app):
+Сценарий 2: запуск в контейнерах (PostgreSQL + app):
 ```bash
 docker compose up -d
 ```
@@ -181,6 +177,7 @@ docker compose down
   hash chain, все фильтры поиска.
 - **`RetentionServiceIntegrationTest`** — проверяет, что события старше retention window
   копируются в архив, но **остаются** в горячей таблице (compliance требование).
+- **ArchUnit-тесты (`src/test/archunit`)** — проверяют архитектурные ограничения и соглашения проекта.
 
 Testcontainers поднимает `postgres:16-alpine` автоматически — Docker должен быть запущен.
 
