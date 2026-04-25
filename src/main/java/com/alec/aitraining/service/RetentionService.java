@@ -1,20 +1,23 @@
 package com.alec.aitraining.service;
 
-import com.alec.aitraining.domain.ArchivedAuditEvent;
-import com.alec.aitraining.domain.AuditEvent;
-import com.alec.aitraining.repository.ArchivedAuditEventRepository;
-import com.alec.aitraining.repository.AuditEventRepository;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.alec.aitraining.domain.ArchivedAuditEvent;
+import com.alec.aitraining.domain.AuditEvent;
+import com.alec.aitraining.repository.ArchivedAuditEventRepository;
+import com.alec.aitraining.repository.AuditEventRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Periodically copies audit events that have exceeded the active retention

@@ -13,5 +13,6 @@ class AitrainingApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 }

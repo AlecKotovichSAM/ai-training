@@ -2,13 +2,9 @@ package com.alec.aitraining;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.alec.aitraining.domain.AuditEvent;
-import com.alec.aitraining.domain.Outcome;
-import com.alec.aitraining.repository.ArchivedAuditEventRepository;
-import com.alec.aitraining.repository.AuditEventRepository;
-import com.alec.aitraining.service.RetentionService;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.testcontainers.postgresql.PostgreSQLContainer;
+
+import com.alec.aitraining.domain.AuditEvent;
+import com.alec.aitraining.domain.Outcome;
+import com.alec.aitraining.repository.ArchivedAuditEventRepository;
+import com.alec.aitraining.repository.AuditEventRepository;
+import com.alec.aitraining.service.RetentionService;
 
 @SpringBootTest
 class RetentionServiceIntegrationTest {
@@ -25,8 +27,10 @@ class RetentionServiceIntegrationTest {
 
 	@Autowired
 	AuditEventRepository auditRepo;
+
 	@Autowired
 	ArchivedAuditEventRepository archiveRepo;
+
 	@Autowired
 	RetentionService retentionService;
 

@@ -1,10 +1,12 @@
 package com.alec.aitraining.dto;
 
+import java.util.Map;
+
 import com.alec.aitraining.domain.Outcome;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Map;
 
 /**
  * Inbound payload for {@code POST /audit-events}.

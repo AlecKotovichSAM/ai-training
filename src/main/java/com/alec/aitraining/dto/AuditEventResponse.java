@@ -1,11 +1,13 @@
 package com.alec.aitraining.dto;
 
-import com.alec.aitraining.domain.AuditEvent;
-import com.alec.aitraining.domain.Outcome;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
+
+import com.alec.aitraining.domain.AuditEvent;
+import com.alec.aitraining.domain.Outcome;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Read model returned to callers — includes the hash-chain fields for

@@ -7,14 +7,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.alec.aitraining.domain.AuditEvent;
-import com.alec.aitraining.domain.Outcome;
-import com.alec.aitraining.dto.AuditEventResponse;
-import com.alec.aitraining.dto.CreateAuditEventRequest;
-import com.alec.aitraining.repository.AuditEventRepository;
 import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -29,6 +25,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.testcontainers.postgresql.PostgreSQLContainer;
+
+import com.alec.aitraining.domain.AuditEvent;
+import com.alec.aitraining.domain.Outcome;
+import com.alec.aitraining.dto.AuditEventResponse;
+import com.alec.aitraining.dto.CreateAuditEventRequest;
+import com.alec.aitraining.repository.AuditEventRepository;
+
 import tools.jackson.databind.ObjectMapper;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -40,10 +43,13 @@ class AuditEventIntegrationTest {
 
 	@Autowired
 	MockMvc mvc;
+
 	@Autowired
 	ObjectMapper objectMapper;
+
 	@Autowired
 	AuditEventRepository repository;
+
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 

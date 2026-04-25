@@ -1,8 +1,10 @@
 package com.alec.aitraining.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+
 import org.springframework.data.domain.Page;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Stable JSON wrapper around a Spring Data {@link Page}.

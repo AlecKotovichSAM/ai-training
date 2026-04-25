@@ -1,15 +1,17 @@
 package com.alec.aitraining.repository;
 
-import com.alec.aitraining.domain.AuditEvent;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.alec.aitraining.domain.AuditEvent;
 
 public interface AuditEventRepository
 		extends JpaRepository<AuditEvent, UUID>, JpaSpecificationExecutor<AuditEvent> {
@@ -26,4 +28,5 @@ public interface AuditEventRepository
 			ORDER BY e.timestamp ASC
 			""")
 	Page<AuditEvent> findOlderThan(@Param("cutoff") Instant cutoff, Pageable pageable);
+
 }

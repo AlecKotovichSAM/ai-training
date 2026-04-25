@@ -1,9 +1,12 @@
 package com.alec.aitraining.dto;
 
-import com.alec.aitraining.domain.Outcome;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.Instant;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.alec.aitraining.domain.Outcome;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Query parameters for {@code GET /audit-events}. All fields are optional;

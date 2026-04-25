@@ -1,22 +1,25 @@
 package com.alec.aitraining.service;
 
-import com.alec.aitraining.domain.AuditEvent;
-import com.alec.aitraining.dto.AuditEventResponse;
-import com.alec.aitraining.dto.AuditEventSearchRequest;
-import com.alec.aitraining.dto.CreateAuditEventRequest;
-import com.alec.aitraining.repository.AuditEventRepository;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.HexFormat;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.alec.aitraining.domain.AuditEvent;
+import com.alec.aitraining.dto.AuditEventResponse;
+import com.alec.aitraining.dto.AuditEventSearchRequest;
+import com.alec.aitraining.dto.CreateAuditEventRequest;
+import com.alec.aitraining.repository.AuditEventRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
