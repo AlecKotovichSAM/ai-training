@@ -146,6 +146,12 @@ com.alec.aitraining/
 
 ## 📅 Change History
 
+### 2026-04-25
+- Added Spotless formatting setup in `pom.xml` with custom Eclipse formatter config `config/eclipse-java-format.xml`.
+- Updated `AGENTS.md` formatting guidance to require using the Spotless/Eclipse formatter settings from `pom.xml`.
+- Added ArchUnit architecture tests in `src/test/archunit/com/alec/aitraining` to validate package-level constraints.
+- Refined CI in `.github/workflows/ci.yml` to a clear 4-step pipeline: build, `spotless:check`, regular tests (excluding ArchUnit), then dedicated ArchUnit run.
+
 ### 2026-04-24
 - Introduced `PageResponse` and switched `GET /audit-events` to a stable paginated response DTO.
 - Improved OpenAPI annotations for DTOs and endpoints to make Swagger contracts clearer.
