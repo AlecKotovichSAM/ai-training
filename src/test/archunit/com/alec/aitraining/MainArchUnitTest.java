@@ -14,7 +14,7 @@ import com.tngtech.archunit.lang.ArchRule;
 
 @Tag("arch")
 @AnalyzeClasses(packages = "com.alec.aitraining", importOptions = ImportOption.DoNotIncludeTests.class)
-class ArchitectureTest {
+class MainArchUnitTest {
 
 	@ArchTest
 	static final ArchRule layerDependencies = layeredArchitecture()

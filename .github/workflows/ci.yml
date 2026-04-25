@@ -40,10 +40,10 @@ jobs:
       # ✅ STEP 3 — Tests (excluding ArchUnit)
       # ─────────────────────────────────────────────
       - name: Run tests (excluding ArchUnit)
-        run: ./mvnw -B test -DexcludedGroups=arch -Djunit.jupiter.tags='!arch'
+        run: ./mvnw -B test -Dexclude='**/*ArchUnitTest.java'
 
       # ─────────────────────────────────────────────
       # ✅ STEP 4 — ArchUnit
       # ─────────────────────────────────────────────
       - name: Run ArchUnit tests
-        run: ./mvnw -B test -Dgroups=arch -DfailIfNoTests=true -Djunit.jupiter.tags=arch
+        run: ./mvnw -B test -Dtest='*ArchUnitTest' -DfailIfNoTests=true
